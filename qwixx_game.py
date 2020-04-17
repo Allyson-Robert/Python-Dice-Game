@@ -66,14 +66,14 @@ class Window(gui.Tk):
         # Define the buttons and the command they should call
         self.next_roll_button = gui.Button(self, text="Next Roll (Space)", 
                 command=self.button_next_roll)
-        self.rmv_y_button = gui.Button(self, text="Remove Yellow Die", 
-                command=lambda: self.remove_colour("yellow"), bg=YELLOW, fg='black')
-        self.rmv_r_button = gui.Button(self, text="Remove Red Die", 
-                command=lambda: self.remove_colour("red"), bg=RED, fg='black')
-        self.rmv_g_button = gui.Button(self, text="Remove Green Die", 
-                command=lambda: self.remove_colour("green"), bg=GREEN, fg='black')
-        self.rmv_b_button = gui.Button(self, text="Remove Blue Die", 
-                command=lambda: self.remove_colour("blue"), bg=BLUE, fg='white')
+        self.rmv_y_button = gui.Button(self, text="Remove Yellow Die", bg=YELLOW, fg='black', 
+                command=lambda: self.remove_colour("yellow"))
+        self.rmv_r_button = gui.Button(self, text="Remove Red Die", bg=RED, fg='black', 
+                command=lambda: self.remove_colour("red"))
+        self.rmv_g_button = gui.Button(self, text="Remove Green Die", bg=GREEN, fg='black', 
+                command=lambda: self.remove_colour("green"))
+        self.rmv_b_button = gui.Button(self, text="Remove Blue Die", bg=BLUE, fg='white', 
+                command=lambda: self.remove_colour("blue"))
         
         # Disable the removal buttons until the first roll
         self.rmv_y_button.config(state="disabled")
@@ -87,7 +87,7 @@ class Window(gui.Tk):
         self.rmv_r_button.pack(in_=self.button_frame, side=gui.LEFT)
         self.rmv_g_button.pack(in_=self.button_frame, side=gui.LEFT)
         self.rmv_b_button.pack(in_=self.button_frame, side=gui.LEFT)
-    
+        
     def button_next_roll(self):
         # Grab the dice rolls and draw them on the board
         rolls = self.game.request_roll()
