@@ -4,6 +4,13 @@ import random as rng
 IMAGE_PATH="images/{}/die{}.png"
 SIDES = 6
 
+WHITE="#cbcbcb"
+YELLOW="#ffff00"
+RED="#ff0000"
+GREEN="#007c00"
+BLUE="#3137ff"
+BLACK="#000000"
+
 class Window(gui.Tk):
     # Construct GUI
     def __init__(self, parent):
@@ -37,9 +44,12 @@ class Window(gui.Tk):
         # Initialise window and game
         self.draw_window()
         
-        # Event handling
+        # Event handling/Button binding
         self.protocol("WM_DELETE_WINDOW", self.destroy)
         self.bind('<Escape>', lambda e: self.destroy())
+        self.bind('<space>', lambda e: self.button_next_roll())
+        self.bind('<Return>', lambda e: self.on_restart())
+        self.bind('q', lambda e: self.destroy())
     
     def draw_window(self):
         # Define the dice frame
@@ -54,29 +64,29 @@ class Window(gui.Tk):
         self.button_frame.pack(side=gui.BOTTOM)
         
         # Define the buttons and the command they should call
-        self.next_roll_button = gui.Button(self, text="Next Roll", 
+        self.next_roll_button = gui.Button(self, text="Next Roll (Space)", 
                 command=self.button_next_roll)
         self.rmv_y_button = gui.Button(self, text="Remove Yellow Die", 
-                command=lambda: self.remove_colour("yellow"))
+                command=lambda: self.remove_colour("yellow"), bg=YELLOW, fg='black')
         self.rmv_r_button = gui.Button(self, text="Remove Red Die", 
-                command=lambda: self.remove_colour("red"))
+                command=lambda: self.remove_colour("red"), bg=RED, fg='black')
         self.rmv_g_button = gui.Button(self, text="Remove Green Die", 
-                command=lambda: self.remove_colour("green"))
+                command=lambda: self.remove_colour("green"), bg=GREEN, fg='black')
         self.rmv_b_button = gui.Button(self, text="Remove Blue Die", 
-                command=lambda: self.remove_colour("blue"))
-        
-        # Position buttons adjacent to eachother from left to right
-        self.next_roll_button.pack(in_=self.button_frame, side=gui.LEFT)
-        self.rmv_y_button.pack(in_=self.button_frame, side=gui.LEFT)
-        self.rmv_r_button.pack(in_=self.button_frame, side=gui.LEFT)
-        self.rmv_g_button.pack(in_=self.button_frame, side=gui.LEFT)
-        self.rmv_b_button.pack(in_=self.button_frame, side=gui.LEFT)
+                command=lambda: self.remove_colour("blue"), bg=BLUE, fg='white')
         
         # Disable the removal buttons until the first roll
         self.rmv_y_button.config(state="disabled")
         self.rmv_r_button.config(state="disabled")
         self.rmv_g_button.config(state="disabled")
         self.rmv_b_button.config(state="disabled")
+            
+        # Position buttons adjacent to eachother from left to right
+        self.next_roll_button.pack(in_=self.button_frame, side=gui.LEFT)
+        self.rmv_y_button.pack(in_=self.button_frame, side=gui.LEFT)
+        self.rmv_r_button.pack(in_=self.button_frame, side=gui.LEFT)
+        self.rmv_g_button.pack(in_=self.button_frame, side=gui.LEFT)
+        self.rmv_b_button.pack(in_=self.button_frame, side=gui.LEFT)
     
     def button_next_roll(self):
         # Grab the dice rolls and draw them on the board
@@ -86,10 +96,10 @@ class Window(gui.Tk):
         # Enable removal buttons after the first roll
         if self.game_state == "initial":
             self.game_state = "ongoing"
-            self.rmv_r_button.config(state="active")
-            self.rmv_g_button.config(state="active")
-            self.rmv_b_button.config(state="active")
-            self.rmv_y_button.config(state="active")
+            self.rmv_y_button.config(state="active", bg=YELLOW, fg='black')
+            self.rmv_r_button.config(state="active", bg=RED, fg='black')
+            self.rmv_g_button.config(state="active", bg=GREEN, fg='black')
+            self.rmv_b_button.config(state="active", bg=BLUE, fg='white')
     
     def update_dice(self, dice_rolls):
         # Empty the window
@@ -134,7 +144,7 @@ class Window(gui.Tk):
         self.game_over_label.pack(side=gui.LEFT)
         
         # Add a restart button
-        self.restart_button = gui.Button(self, text="Restart?",  command=self.on_restart)
+        self.restart_button = gui.Button(self, text="Restart? (Return)",  command=self.on_restart)
         self.restart_button.pack()
         
     def on_restart(self):
