@@ -11,6 +11,9 @@ class Window(gui.Tk):
         gui.Tk.__init__(self, parent)
         self.parent = parent
         self.initialise()
+        
+        # Hold the window open
+        self.mainloop()
     
     def initialise(self):
         # Initialise Game
@@ -27,18 +30,16 @@ class Window(gui.Tk):
                 self.dice_images[colour] += [image_reference.subsample(3, 3)]
         
         # Initialise window and game
-        self.geometry("1150x250")
         self.draw_window()
         self.title("Qwixx Dice Roller")
         
         # Event handling
         self.protocol("WM_DELETE_WINDOW", self.destroy)
         self.bind('<Escape>', lambda e: self.destroy())
-        
-        # Loop the window
-        self.mainloop()
-        
+    
     def draw_window(self):
+        self.geometry("1150x250")
+        
         # Define the dice frame
         self.dice_frame = gui.Frame(self, width=1000, height=200)
         self.dice_frame.pack(side=gui.TOP)
@@ -166,4 +167,4 @@ class Qwixx():
         return "ongoing"
 
 if __name__ == "__main__":
-    Window(None)
+    app = Window(None)
