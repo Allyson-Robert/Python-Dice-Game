@@ -10,6 +10,11 @@ class Window(gui.Tk):
         # tkinter initialisation
         gui.Tk.__init__(self, parent)
         self.parent = parent
+        
+        # General settings
+        self.title("Qwixx Dice Roller")
+        self.geometry("1150x250")
+        
         self.initialise()
         
         # Hold the window open
@@ -31,15 +36,12 @@ class Window(gui.Tk):
         
         # Initialise window and game
         self.draw_window()
-        self.title("Qwixx Dice Roller")
         
         # Event handling
         self.protocol("WM_DELETE_WINDOW", self.destroy)
         self.bind('<Escape>', lambda e: self.destroy())
     
     def draw_window(self):
-        self.geometry("1150x250")
-        
         # Define the dice frame
         self.dice_frame = gui.Frame(self, width=1000, height=200)
         self.dice_frame.pack(side=gui.TOP)
@@ -148,6 +150,10 @@ class Qwixx():
         self.qwixx_dice = {"white_1": 0, "white_2": 0, "yellow": 0, 
             "red": 0, "green": 0, "blue": 0}
     
+    def reset_dice(self):
+        for die in self.qwixx_dice:
+            self.qwixx_dice[die] = 0
+    
     # Request dice
     def request_dice(self):
         return self.qwixx_dice.copy()
@@ -161,6 +167,7 @@ class Qwixx():
     # Remove a colour from the game, set state to game_over if second dice has been removed
     def rmv_die(self, colour):
         self.qwixx_dice.pop(colour)
+        self.reset_dice()
         
         if len(self.qwixx_dice) < 5:
             return "game_over"
