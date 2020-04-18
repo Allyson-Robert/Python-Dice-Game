@@ -67,20 +67,14 @@ class Window(gui.Tk):
         self.next_roll_button = gui.Button(self, text="Next Roll (Space)", 
                 command=self.button_next_roll)
         self.rmv_y_button = gui.Button(self, text="Remove Yellow Die", bg=YELLOW, fg='black', 
-                command=lambda: self.remove_colour("yellow"))
+                command=lambda: self.remove_colour("yellow"), state=gui.DISABLED)
         self.rmv_r_button = gui.Button(self, text="Remove Red Die", bg=RED, fg='black', 
-                command=lambda: self.remove_colour("red"))
+                command=lambda: self.remove_colour("red"), state=gui.DISABLED)
         self.rmv_g_button = gui.Button(self, text="Remove Green Die", bg=GREEN, fg='black', 
-                command=lambda: self.remove_colour("green"))
+                command=lambda: self.remove_colour("green"), state=gui.DISABLED)
         self.rmv_b_button = gui.Button(self, text="Remove Blue Die", bg=BLUE, fg='white', 
-                command=lambda: self.remove_colour("blue"))
+                command=lambda: self.remove_colour("blue"), state=gui.DISABLED)
         
-        # Disable the removal buttons until the first roll
-        self.rmv_y_button.config(state="disabled")
-        self.rmv_r_button.config(state="disabled")
-        self.rmv_g_button.config(state="disabled")
-        self.rmv_b_button.config(state="disabled")
-            
         # Position buttons adjacent to eachother from left to right
         self.next_roll_button.pack(in_=self.button_frame, side=gui.LEFT)
         self.rmv_y_button.pack(in_=self.button_frame, side=gui.LEFT)
@@ -96,10 +90,10 @@ class Window(gui.Tk):
         # Enable removal buttons after the first roll
         if self.game_state == "initial":
             self.game_state = "ongoing"
-            self.rmv_y_button.config(state="active", bg=YELLOW, fg='black')
-            self.rmv_r_button.config(state="active", bg=RED, fg='black')
-            self.rmv_g_button.config(state="active", bg=GREEN, fg='black')
-            self.rmv_b_button.config(state="active", bg=BLUE, fg='white')
+            self.rmv_y_button.config(state=gui.NORMAL, bg=YELLOW, fg='black')
+            self.rmv_r_button.config(state=gui.NORMAL, bg=RED, fg='black')
+            self.rmv_g_button.config(state=gui.NORMAL, bg=GREEN, fg='black')
+            self.rmv_b_button.config(state=gui.NORMAL, bg=BLUE, fg='white')
     
     def update_dice(self, dice_rolls):
         # Empty the window
