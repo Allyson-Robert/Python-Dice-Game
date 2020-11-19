@@ -19,7 +19,7 @@ class Window(gui.Tk):
         self.parent = parent
         
         # General settings
-        self.title("Qwixx Dice Roller")
+        self.title("Dice Roller")
         self.geometry("1150x250")
         
         self.initialise()
@@ -29,7 +29,7 @@ class Window(gui.Tk):
     
     def initialise(self):
         # Initialise Game
-        self.game = Qwixx()
+        self.game = Game()
         self.game_state = "initial"
         
         # Generate a list of appropriately sized images
@@ -148,34 +148,35 @@ class Window(gui.Tk):
         self.restart_button.destroy()
         self.initialise()
 
-class Qwixx():
-    # Define the six coloured dice present in a Qwixx game
+class Game():
+    # Define the six coloured dice present in the game
     def __init__(self):
-        self.qwixx_dice = {"white_1": 0, "white_2": 0, "yellow": 0, 
+        self.dice = {"white_1": 0, "white_2": 0, "yellow": 0,
             "red": 0, "green": 0, "blue": 0}
     
     def reset_dice(self):
-        for die in self.qwixx_dice:
-            self.qwixx_dice[die] = 0
+        for die in self.dice:
+            self.dice[die] = 0
     
     # Request dice
     def request_dice(self):
-        return self.qwixx_dice.copy()
+        return self.dice.copy()
     
     # Roll each of the dice present in the game
     def request_roll(self):
-        for die in self.qwixx_dice:
-            self.qwixx_dice[die] = rng.randint(1, 6)
-        return self.qwixx_dice.copy()
+        for die in self.dice:
+            self.dice[die] = rng.randint(1, 6)
+        return self.dice.copy()
     
     # Remove a colour from the game, set state to game_over if second dice has been removed
     def rmv_die(self, colour):
-        self.qwixx_dice.pop(colour)
+        self.dice.pop(colour)
         self.reset_dice()
         
-        if len(self.qwixx_dice) < 5:
+        if len(self.dice) < 5:
             return "game_over"
         return "ongoing"
+
 
 if __name__ == "__main__":
     app = Window(None)
