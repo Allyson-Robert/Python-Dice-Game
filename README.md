@@ -1,4 +1,4 @@
-# Python Rice Roller
+# Python Dice Roller
 A python script to throw coloured dice.
 When running this script two white and four coloured dice will be thrown each time this is requested.
 Any coloured dice can be taken out of the game when that colour is closed by a player.
